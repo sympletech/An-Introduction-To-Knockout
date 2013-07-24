@@ -1,0 +1,19 @@
+﻿body {
+    background: url("images/main-background.jpg") no-repeat scroll center top #B85C1E;
+}
+
+.logo {
+    height: 75px;
+    margin: 20px;
+    cursor: pointer;
+}
+
+.main-content {
+    width: 85%;
+    border: solid 1px #b85c1e;
+    border-radius: 5px;
+    margin: auto;
+    min-height: 500px;
+    background: #fff;
+    padding: 10px; 
+}

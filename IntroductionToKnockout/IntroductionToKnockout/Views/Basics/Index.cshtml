@@ -1,0 +1,35 @@
+﻿@{
+    Layout = "Shared/_Layout.cshtml";
+}
+
+@section Scripts{
+    <script type="text/javascript">
+        $(function() {
+            $("#btnProcess").click(function (e) {
+                e.preventDefault();
+                $("#myResults").html($("#myInput").val());
+            });
+        });
+    </script>
+}
+
+<div class="well">
+    <form>
+        <fieldset>
+            <legend>Data-Binding 101</legend>
+
+            <label>Type Something Here</label>
+            <input id="myInput" type="text" placeholder="Come on you know you want to...." />
+
+            <div style="padding: 25px;">
+                <button id="btnProcess" class="btn btn-primary" onclick="ProcessInput()">Process Input</button>
+            </div>
+
+            <label>Results</label>
+            <div id="myResults" class="alert alert-info" style="width: 200px; height: 50px;">
+            </div>
+
+        </fieldset>
+    </form>
+
+</div>

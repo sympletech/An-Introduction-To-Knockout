@@ -1,0 +1,110 @@
+﻿@{
+    Layout = "Shared/_Layout.cshtml";
+}
+
+@section Scripts{
+    <script type="text/javascript">
+        var vModel = function() {
+            var self = this;
+
+            self.cars = ko.observableArray([]);
+            self.loadCars = function() {
+                $.get('/Services/Cars', function(data) {
+                    self.cars(data);
+                });
+            };
+            self.loadCars();
+
+
+            self.addCarName = ko.observable();
+            self.addCarSpeed = ko.observable();
+            self.addCarType = ko.observable();
+
+            self.carTypeChoices = ko.observableArray(["Car", "Truck"]);
+
+            self.displayTemplate = function(car) {
+                return car.Type == "Car" ? "car-template" : "truck-template";
+            };
+
+            self.submitCarForm = function() {
+                $.post('/Services/Cars', { Name: self.addCarName, Speed: self.addCarSpeed, Type: self.addCarType }, function (data) {
+                    self.cars(data);
+                });
+            };
+
+            self.removeCar = function(car) {
+                $.ajax({
+                    url: '/Services/Cars/' + car.Id,
+                    type: 'DELETE',
+                    success: function (data) {
+                        self.cars(data);
+                    }
+                });
+            };
+        };
+
+        ko.applyBindings(new vModel());
+
+    </script>
+}
+
+<h2>Mapping</h2>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Car</th>
+            <th>Speed</th>
+            <th>Type</th>
+            <th class="span1">controls</th>
+        </tr>
+    </thead>
+    <tbody data-bind="template: { name: displayTemplate, foreach: cars } " >
+    </tbody>
+</table>
+
+<script type="text/html" id="car-template">
+    <tr>
+        <td data-bind="text: $data.Name"></td>
+        <td data-bind="text: $data.Speed"></td>
+        <td>
+            <img src="/Content/Styles/images/car-icon.jpg" />
+        </td>
+        <td>
+            <i class="icon-edit" style="cursor: pointer"></i>
+            <i data-bind="click: $root.removeCar" class="icon-remove-circle" style="cursor: pointer"></i>
+        </td>
+    </tr>
+</script>
+
+<script type="text/html" id="truck-template">
+    <tr>
+        <td data-bind="text: $data.Name"></td>
+        <td data-bind="text: $data.Speed"></td>
+        <td>
+            <img src="/Content/Styles/images/truck-icon.jpg" />
+        </td>
+        <td>
+            <i class="icon-edit" style="cursor: pointer"></i>
+            <i data-bind="click: $root.removeCar" class="icon-remove-circle" style="cursor: pointer"></i>
+        </td>
+    </tr>    
+</script>
+
+<div class="well">
+    <fieldset>
+        <legend>Add New Car</legend>
+            
+        <label>Car</label>
+        <input data-bind="value : addCarName" type="text"/>
+        
+        <label>Speed</label>
+        <input data-bind="value : addCarSpeed" type="text"/>
+        
+        <label>Type</label>
+        <select data-bind="value: addCarType, options: carTypeChoices"></select>        
+
+        <br/>
+        <button data-bind="click: submitCarForm" class="btn btn-primary">Submit</button>
+
+    </fieldset>
+</div>

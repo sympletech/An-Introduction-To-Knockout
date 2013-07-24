@@ -1,0 +1,84 @@
+﻿@{
+    Layout = "Shared/_Layout.cshtml";
+}
+
+@section Scripts{
+    <script type="text/javascript">
+        var vModel = function() {
+            var self = this;
+
+            self.cars = ko.observableArray([]);
+            self.loadCars = function() {
+                $.get('/Services/Cars', function(data) {
+                    self.cars(data);
+                });
+            };
+            self.loadCars();
+
+
+            self.addCarName = ko.observable();
+            self.addCarSpeed = ko.observable();
+            self.addCarType = ko.observable();
+
+            self.carTypeChoices = ko.observableArray(["Car", "Truck"]);
+
+            self.addNewCar = function() {
+                $.post('/Services/Cars', { Name: self.addCarName, Speed: self.addCarSpeed, Type: self.addCarType }, function (data) {
+                    self.cars(data);
+                });
+            };
+
+            self.removeCar = function(car) {
+                $.ajax({
+                    url: '/Services/Cars/' + car.Id,
+                    type: 'DELETE',
+                    success: function (data) {
+                        self.cars(data);
+                    }
+                });
+            };
+        };
+
+        ko.applyBindings(new vModel());
+
+    </script>
+}
+
+<h2>Templates</h2>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Car</th>
+            <th>Speed</th>
+            <th>Type</th>
+            <th class="span1">Remove</th>
+        </tr>
+    </thead>
+    <tbody data-bind="foreach: cars">
+        <tr>
+            <td data-bind="text: $data.Name"></td>
+            <td data-bind="text: $data.Speed"></td>
+            <td data-bind="text: $data.Type"></td>
+            <td><i data-bind="click: $root.removeCar" class="icon-remove-circle" style="cursor: pointer"></i></td>
+        </tr>
+    </tbody>
+</table>
+
+<div class="well">
+    <fieldset>
+        <legend>Add New Car</legend>
+            
+        <label>Car</label>
+        <input data-bind="value : addCarName" type="text"/>
+        
+        <label>Speed</label>
+        <input data-bind="value : addCarSpeed" type="text"/>
+        
+        <label>Type</label>
+        <select data-bind="value: addCarType, options: carTypeChoices"></select>
+
+        <br/>
+        <button data-bind="click: addNewCar" class="btn btn-primary">Add Car</button>
+
+    </fieldset>
+</div>
