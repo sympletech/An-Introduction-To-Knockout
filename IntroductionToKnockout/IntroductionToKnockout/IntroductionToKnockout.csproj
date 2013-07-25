@@ -103,9 +103,13 @@
     <Content Include="Views\Templates\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Data\Car.cs" />
+    <Compile Include="Data\FakeDatabase.cs" />
     <Compile Include="MainConfig.cs" />
     <Compile Include="Modules\BaseRoutes.cs" />
-    <Compile Include="Modules\TemplatesModule.cs" />
+    <Compile Include="Modules\ServicesModule.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -130,7 +134,7 @@
         <WebProjectProperties>
           <UseIIS>True</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>0</DevelopmentServerPort>
+          <DevelopmentServerPort>49333</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>http://localhost:57067/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
