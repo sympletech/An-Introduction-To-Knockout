@@ -26,14 +26,6 @@
                 });
             };
 
-            self.editingCar = ko.observable();
-            self.editCar = function (car) {
-                self.addCarName(car.car);
-                self.addCarSpeed(car.speed);
-
-                self.editingCar(self.cars.indexOf(car));
-            };
-
             self.removeCar = function (car) {
                 self.cars.remove(car);
             };
@@ -55,7 +47,7 @@
     </thead>
     <tbody data-bind="foreach: cars">
         <tr>
-            <td data-bind="text: $data.car, click: $root.editCar"></td>
+            <td data-bind="text: $data.car"></td>
             <td data-bind="text: $data.speed"></td>
             <td><i data-bind="click: $root.removeCar" class="icon-remove-circle" style="cursor: pointer"></i></td>
         </tr>
