@@ -9,6 +9,13 @@
 
             self.cars = ko.observableArray([]);
 
+            self.loadCars = function () {
+                $.get('/Services/Cars', function (data) {
+                    self.cars(data);
+                });
+            };
+            self.loadCars();
+
             self.addCarName = ko.observable();
             self.addCarSpeed = ko.observable();
             self.addNewCar = function() {
@@ -40,8 +47,8 @@
     </thead>
     <tbody data-bind="foreach: cars">
         <tr>
-            <td data-bind="text: $data.car"></td>
-            <td data-bind="text: $data.speed"></td>
+            <td data-bind="text: $data.Name"></td>
+            <td data-bind="text: $data.Speed"></td>
             <td><i data-bind="click: $root.removeCar" class="icon-remove-circle" style="cursor: pointer"></i></td>
         </tr>
     </tbody>
