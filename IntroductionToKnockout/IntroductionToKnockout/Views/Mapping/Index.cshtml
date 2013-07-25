@@ -4,35 +4,36 @@
 
 @section Scripts{
     <script type="text/javascript">
-        var vModel = function() {
+        var vModel = function () {
             var self = this;
 
             self.cars = ko.observableArray([]);
-            self.loadCars = function() {
-                $.get('/Services/Cars', function(data) {
+            self.loadCars = function () {
+                $.get('/Services/Cars', function (data) {
                     self.cars(data);
                 });
             };
             self.loadCars();
 
-
-            self.addCarName = ko.observable();
-            self.addCarSpeed = ko.observable();
-            self.addCarType = ko.observable();
+            self.formObject = ko.mapping.fromJS({
+                Name: '',
+                Speed: '',
+                Type: ''
+            });
 
             self.carTypeChoices = ko.observableArray(["Car", "Truck"]);
 
-            self.displayTemplate = function(car) {
+            self.displayTemplate = function (car) {
                 return car.Type == "Car" ? "car-template" : "truck-template";
             };
 
-            self.submitCarForm = function() {
-                $.post('/Services/Cars', { Name: self.addCarName, Speed: self.addCarSpeed, Type: self.addCarType }, function (data) {
+            self.submitCarForm = function () {
+                $.post('/Services/Cars', ko.mapping.toJS(self.formObject), function (data) {
                     self.cars(data);
                 });
             };
 
-            self.removeCar = function(car) {
+            self.removeCar = function (car) {
                 $.ajax({
                     url: '/Services/Cars/' + car.Id,
                     type: 'DELETE',
@@ -95,13 +96,13 @@
         <legend>Add New Car</legend>
             
         <label>Car</label>
-        <input data-bind="value : addCarName" type="text"/>
+        <input data-bind="value: formObject.Name" type="text"/>
         
         <label>Speed</label>
-        <input data-bind="value : addCarSpeed" type="text"/>
+        <input data-bind="value: formObject.Speed" type="text"/>
         
         <label>Type</label>
-        <select data-bind="value: addCarType, options: carTypeChoices"></select>        
+        <select data-bind="value: formObject.Type, options: carTypeChoices"></select>        
 
         <br/>
         <button data-bind="click: submitCarForm" class="btn btn-primary">Submit</button>
