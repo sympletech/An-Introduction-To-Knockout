@@ -12,6 +12,14 @@
             { car: "VW Love Bus", speed: 45 }
         ];
 
+        var vModel = function () {
+            var self = this;
+
+            self.cars = ko.observableArray(myCollection);
+        };
+
+        ko.applyBindings(new vModel());
+
     </script>
 }
 
@@ -24,10 +32,10 @@
             <th class="span1">Remove</th>
         </tr>
     </thead>
-    <tbody>
+    <tbody data-bind="foreach: cars">
         <tr>
-            <td></td>
-            <td></td>
+            <td data-bind="text: $data.car"></td>
+            <td data-bind="text: $data.speed"></td>
             <td><i class="icon-remove-circle" style="cursor: pointer"></i></td>
         </tr>
     </tbody>
