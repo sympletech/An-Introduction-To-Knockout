@@ -14,7 +14,7 @@ namespace IntroductionToKnockout.Modules
             Post["/Cars"] = ctx =>
                 {
                     var carToAdd = this.Bind<Car>();
-                    if (carToAdd.Id == null)
+                    if (carToAdd.Id == 0 || carToAdd.Id == null)
                     {
                         try
                         {

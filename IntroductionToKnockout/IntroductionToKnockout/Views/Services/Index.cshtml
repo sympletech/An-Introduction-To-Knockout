@@ -19,11 +19,21 @@
             self.addCarName = ko.observable();
             self.addCarSpeed = ko.observable();
             self.addNewCar = function() {
-
+                $.post('/Services/Cars',
+                    { Name: self.addCarName, Speed: self.addCarSpeed },
+                    function(data) {
+                        self.cars(data);
+                    });
             };
 
-            self.removeCar = function(car) {
-
+            self.removeCar = function (car) {
+                $.ajax({
+                    url: '/Services/Cars/' + car.Id,
+                    type: 'DELETE',
+                    success: function (data) {
+                        self.cars(data);
+                    }
+                });
             };
         };
 
