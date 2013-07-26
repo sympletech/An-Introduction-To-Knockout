@@ -27,6 +27,10 @@
                 return car.Type == "Car" ? "car-template" : "truck-template";
             };
 
+            self.editCar = function (car) {
+                ko.mapping.fromJS(car, self.formObject);
+            };
+
             self.submitCarForm = function () {
                 $.post('/Services/Cars', ko.mapping.toJS(self.formObject), function (data) {
                     self.cars(data);
@@ -71,7 +75,7 @@
             <img src="/Content/images/car-icon.jpg" />
         </td>
         <td>
-            <i class="icon-edit" style="cursor: pointer"></i>
+            <i data-bind="click: $root.editCar" class="icon-edit" style="cursor: pointer"></i>
             <i data-bind="click: $root.removeCar" class="icon-remove-circle" style="cursor: pointer"></i>
         </td>
     </tr>
@@ -85,7 +89,7 @@
             <img src="/Content/images/truck-icon.jpg" />
         </td>
         <td>
-            <i class="icon-edit" style="cursor: pointer"></i>
+            <i data-bind="click: $root.editCar" class="icon-edit" style="cursor: pointer"></i>
             <i data-bind="click: $root.removeCar" class="icon-remove-circle" style="cursor: pointer"></i>
         </td>
     </tr>    
