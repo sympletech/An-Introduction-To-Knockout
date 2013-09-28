@@ -4,37 +4,40 @@
 
 @section Scripts{
     <script type="text/javascript">
-        var vmGrid = function () {
+        var vmGrid = function() {
             var self = this;
-            
+
             self.cars = ko.observableArray([]);
-            self.loadCars = function () {
-                $.get('/Services/Cars', function (data) {
+            self.loadCars = function() {
+                $.get('/Services/Cars', function(data) {
                     self.cars(data);
                 });
             };
-            
 
-            self.displayTemplate = function (car) {
+
+            self.displayTemplate = function(car) {
                 return car.Type == "Car" ? "car-template" : "truck-template";
             };
 
-            self.editCar = function (car) {
-                $.get('/Services/Cars/' + car.Id, function (data) {
-                    //Need to notify the form model to display car
+            self.editCar = function(car) {
+                $.get('/Services/Cars/' + car.Id, function(data) {
+                    amplify.publish('CarDetailsLoaded', car);
                 });
             };
-            
-            self.removeCar = function (car) {
+
+            self.removeCar = function(car) {
                 $.ajax({
                     url: '/Services/Cars/' + car.Id,
                     type: 'DELETE',
-                    success: function (data) {
+                    success: function(data) {
                         self.cars(data);
                     }
                 });
             };
 
+            amplify.subscribe("CarFormSubmitted", function() {
+                self.loadCars();
+            });
             self.loadCars();
         };
 
@@ -48,13 +51,18 @@
                 Type: ''
             });
 
+
             self.carTypeChoices = ko.observableArray(["Car", "Truck"]);
 
             self.submitCarForm = function() {
                 $.post('/Services/Cars', ko.mapping.toJS(self.formObject), function(data) {
-                    //Need to notify the grid view model to reload
+                    amplify.publish("CarFormSubmitted");
                 });
             };
+
+            amplify.subscribe("CarDetailsLoaded", function(car) {
+                ko.mapping.fromJS(car, self.formObject);
+            });
 
         };
 
