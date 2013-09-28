@@ -4,44 +4,46 @@
 
 @section Scripts{
     <script type="text/javascript">
-        var vModel = function () {
+        var vModel = function() {
             var self = this;
 
             self.cars = ko.observableArray([]);
-            self.loadCars = function () {
-                $.get('/Services/Cars', function (data) {
+            self.loadCars = function() {
+                $.get('/Services/Cars', function(data) {
                     self.cars(data);
                 });
             };
             self.loadCars();
 
             self.formObject = ko.mapping.fromJS({
-                Name: '',
-                Speed: '',
-                Type: ''
+                    Name: '',
+                    Speed: '',
+                    Type: ''                
             });
 
             self.carTypeChoices = ko.observableArray(["Car", "Truck"]);
 
-            self.displayTemplate = function (car) {
+            self.displayTemplate = function(car) {
                 return car.Type == "Car" ? "car-template" : "truck-template";
             };
 
-            self.editCar = function (car) {
-                ko.mapping.fromJS(car, self.formObject);
+            self.editCar = function(car) {
+                $.get('/Services/Cars/' + car.Id, function(data) {
+                    ko.mapping.fromJS(data, self.formObject);
+                });
             };
 
-            self.submitCarForm = function () {
-                $.post('/Services/Cars', ko.mapping.toJS(self.formObject), function (data) {
+            self.submitCarForm = function() {
+                $.post('/Services/Cars', ko.mapping.toJS(self.formObject), function(data) {
                     self.cars(data);
                 });
             };
 
-            self.removeCar = function (car) {
+            self.removeCar = function(car) {
                 $.ajax({
                     url: '/Services/Cars/' + car.Id,
                     type: 'DELETE',
-                    success: function (data) {
+                    success: function(data) {
                         self.cars(data);
                     }
                 });
