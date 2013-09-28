@@ -19,6 +19,8 @@ namespace IntroductionToKnockout.Modules
 
             Post["/Cars"] = ctx =>
                 {
+                    object result; 
+
                     var carToAdd = this.Bind<Car>();
                     if (carToAdd.Id == null || carToAdd.Id == 0)
                     {
@@ -31,15 +33,27 @@ namespace IntroductionToKnockout.Modules
                             carToAdd.Id = 1;
                         }
                         FakeDatabase.Cars.Add(carToAdd);
+                        result = new
+                        {
+                            title = "New Vehicle Added",
+                            body = "A New Vehicle Was Added"
+                        };
+
                     }
                     else
                     {
                         var carToUpdate = FakeDatabase.Cars.Find(x => x.Id == carToAdd.Id);
                         var i = FakeDatabase.Cars.IndexOf(carToUpdate);
                         FakeDatabase.Cars[i] = carToAdd;
+                        
+                        result = new
+                        {
+                            title = "Existing Vehicle Updated",
+                            body = "The Vehicle with PK " + carToAdd.Id + " Was Updated"
+                        };
                     }
 
-                    return FakeDatabase.Cars;
+                    return result;
                 };
 
             Delete["/Cars/{id}"] = ctx =>
@@ -48,7 +62,11 @@ namespace IntroductionToKnockout.Modules
                     var itemToDelete = FakeDatabase.Cars.Find(x => x.Id == id);
                     FakeDatabase.Cars.Remove(itemToDelete);
 
-                    return FakeDatabase.Cars;
+                    return new
+                    {
+                        title = "Vehicle Was Deleted",
+                        body = "The Vehicle with PK " + id + " Was Deleted"
+                    };
                 };
         }
 

@@ -29,8 +29,9 @@
                 $.ajax({
                     url: '/Services/Cars/' + car.Id,
                     type: 'DELETE',
-                    success: function(data) {
-                        self.cars(data);
+                    success: function (data) {
+                        self.loadCars();
+                        amplify.publish("ShowConfirmationUI", data);
                     }
                 });
             };
@@ -57,6 +58,7 @@
             self.submitCarForm = function() {
                 $.post('/Services/Cars', ko.mapping.toJS(self.formObject), function(data) {
                     amplify.publish("CarFormSubmitted");
+                    amplify.publish("ShowConfirmationUI", data);
                 });
             };
 
@@ -75,11 +77,12 @@
             $("#form-modal").modal({
                 show : false    
             });
+        });
 
-            $("#btn-form-modal").click(function(e) {
-                e.preventDefault();
-                $("#form-modal").modal('show');
-            });
+        amplify.subscribe("ShowConfirmationUI", function (data) {
+            $("#form-modal-label").html(data.title);
+            $("#form-modal-body").html(data.body);
+            $("#form-modal").modal('show');
         });
     </script>
 }
@@ -147,7 +150,6 @@
     </fieldset>
 </div>
 
-<button id="btn-form-modal">Show Modal</button>
 <div id="form-modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
