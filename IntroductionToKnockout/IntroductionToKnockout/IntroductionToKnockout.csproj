@@ -79,6 +79,7 @@
     <Content Include="Content\images\ko-logo.png" />
     <Content Include="Content\images\main-background.jpg" />
     <Content Include="Content\images\truck-icon.jpg" />
+    <Content Include="Content\master.css" />
     <Content Include="packages.config" />
     <None Include="Scripts\jquery-2.0.3.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -132,7 +133,7 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>True</UseIIS>
+          <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>49333</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
