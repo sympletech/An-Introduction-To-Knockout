@@ -11,6 +11,12 @@ namespace IntroductionToKnockout.Modules
         {
             Get["/Cars"] = ctx => FakeDatabase.Cars;
 
+            Get["/Cars/{id}"] = ctx =>
+                {
+                    var id = ctx["id"];
+                    return FakeDatabase.Cars.Find(x => x.Id == id);                    
+                };
+
             Post["/Cars"] = ctx =>
                 {
                     var carToAdd = this.Bind<Car>();
