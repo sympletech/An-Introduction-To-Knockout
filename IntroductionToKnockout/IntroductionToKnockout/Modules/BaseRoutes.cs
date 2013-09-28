@@ -12,6 +12,7 @@ namespace IntroductionToKnockout.Modules
             Get["/Services"] = ctx => View["Services/Index"];
             Get["/Templates"] = ctx => View["Templates/Index"];
             Get["/Mapping"] = ctx => View["Mapping/Index"];
+            Get["/PubSub"] = ctx => View["PubSub/Index"];
 
             
             Get["/Izzy"] = ctx => View["Izzy/Index"];

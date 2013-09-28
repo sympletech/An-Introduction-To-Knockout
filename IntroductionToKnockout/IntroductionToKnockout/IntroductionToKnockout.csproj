@@ -82,6 +82,7 @@
     <Content Include="Content\master.css" />
     <Content Include="packages.config" />
     <None Include="Scripts\jquery-2.0.3.intellisense.js" />
+    <Content Include="Scripts\amplify.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\jquery-2.0.3.js" />
@@ -98,6 +99,7 @@
     <Content Include="Views\Izzy\index.cshtml" />
     <Content Include="Views\Mapping\Index.cshtml" />
     <Content Include="Views\Services\Index.cshtml" />
+    <Content Include="Views\PubSub\Index.cshtml" />
     <None Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Web.config" />
     <Content Include="Scripts\jquery-2.0.3.min.map" />
