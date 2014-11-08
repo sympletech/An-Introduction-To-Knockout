@@ -58,13 +58,13 @@
         { car: "VW Love Bus", speed: 45 }
     ];
 
-    var vModel = function () {
+    var ViewModel = function () {
         var self = this;
 
         self.cars = ko.observableArray(myCollection);
     };
 
-    ko.applyBindings(new vModel());
+    ko.applyBindings(new ViewModel());
 
     </script>
 
