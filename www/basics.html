@@ -11,7 +11,31 @@
     <img src="img/ko-logo.png" onclick="window.location.href='index.html'" />
     <div class="main-content">
 
+        <div class="well">
+            <form>
+                <fieldset>
+                    <legend>Data-Binding 101</legend>
 
+                    <label>Type Something Here</label>
+                    <input id="myInput" data-bind="value : message" type="text"
+                           placeholder="Come on you know you want to...." />
+
+                    <div style="padding: 25px;">
+                        <button id="btnProcess" class="btn btn-primary"
+                                data-bind="click: buttonClicked">
+                            Process Input
+                        </button>
+                    </div>
+
+                    <label>Results</label>
+                    <div id="myResults" data-bind="html: message" class="alert alert-info"
+                         style="width: 200px; height: 50px;">
+                    </div>
+
+                </fieldset>
+            </form>
+
+        </div>
 
     </div>
 
