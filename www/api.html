@@ -65,11 +65,23 @@
             self.addCarName = ko.observable();
             self.addCarSpeed = ko.observable();
             self.addNewCar = function () {
+                var payload = { car: self.addCarName(), speed: self.addCarSpeed() };
 
+                $.post('http://localhost:5150/cars',
+                    { payload: JSON.stringify(payload) },
+                    function () {
+                        self.loadCars();
+                    });
             };
 
             self.removeCar = function (car) {
-
+                $.ajax({
+                    url: 'http://localhost:5150/cars/' + car.id,
+                    type: 'DELETE',
+                    success: function () {
+                        self.loadCars();
+                    }
+                });
             };
 
             return self;

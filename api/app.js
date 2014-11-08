@@ -28,13 +28,15 @@ server.post('/cars', function(req, res){
     var itemToSave = JSON.parse(req.params.payload);
     itemToSave.id = _.uniqueId();
     cars.push(itemToSave);
-
+    res.send('complete');
 });
 
 server.del('/cars/:id', function(req, res){
-    cars = _.remove(cars, function(car){
+    _.remove(cars, function(car){
         return car.id == req.params.id;
     });
+
+    res.send('complete');
 });
 
 
