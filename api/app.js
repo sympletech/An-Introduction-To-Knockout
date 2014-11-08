@@ -2,6 +2,9 @@ var restify = require('restify'),
     _ = require('lodash');
 
 var server = restify.createServer();
+server.use(restify.fullResponse());
+server.use(restify.bodyParser());
+server.use(restify.gzipResponse());
 
 server.get('/', function(req, res, next){
     res.send('An API');

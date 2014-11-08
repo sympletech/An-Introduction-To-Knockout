@@ -1,0 +1,83 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Knockout JS Is Fun</title>
+    <link href="css/bootstrap.min.css" rel="stylesheet" />
+    <link href="css/bootstrap-responsive.min.css" rel="stylesheet" />
+    <link href="css/master.css" rel="stylesheet" />
+</head>
+<body>
+
+    <img src="img/ko-logo.png" onclick="window.location.href='index.html'" />
+    <div class="main-content">
+
+        <h2>Communicating With an API or Backend Service</h2>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Car</th>
+                    <th>Speed</th>
+                    <th class="span1">Remove</th>
+                </tr>
+            </thead>
+            <tbody data-bind="foreach: cars">
+                <tr>
+                    <td data-bind="text: $data.car"></td>
+                    <td data-bind="text: $data.speed"></td>
+                    <td><i data-bind="click: $root.removeCar" class="icon-remove-circle" style="cursor: pointer"></i></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="well">
+            <fieldset>
+                <legend>Add New Car</legend>
+
+                <label>Car</label>
+                <input data-bind="value : addCarName" type="text" />
+
+                <label>Speed</label>
+                <input data-bind="value : addCarSpeed" type="text" />
+
+                <br />
+                <button data-bind="click: addNewCar" class="btn btn-primary">Add Car</button>
+
+            </fieldset>
+        </div>
+
+    </div>
+
+    <script src="js/lib/jquery-2.1.1.min.js"></script>
+    <script src="js/lib/knockout-3.2.0.js"></script>
+    <script type="text/javascript">
+        var ViewModel = function () {
+            var self = {};
+
+            self.cars = ko.observableArray([]);
+
+            self.loadCars = function () {
+                $.get('http://localhost:5150/cars', function (data) {
+                    self.cars(data);
+                });
+            };
+            self.loadCars();
+
+            self.addCarName = ko.observable();
+            self.addCarSpeed = ko.observable();
+            self.addNewCar = function () {
+
+            };
+
+            self.removeCar = function (car) {
+
+            };
+
+            return self;
+        };
+
+        ko.applyBindings(new ViewModel());
+
+    </script>    
+
+</body>
+</html>
