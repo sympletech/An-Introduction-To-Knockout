@@ -13,11 +13,11 @@ server.get('/', function(req, res, next){
 
 
 var cars = [
-    { id: _.uniqueId(), car: "Ford Mustang", speed: 160 },
-    { id: _.uniqueId(), car: "Chevy Camaro", speed: 220 },
-    { id: _.uniqueId(), car: "Dodge Dart", speed: 140 },
-    { id: _.uniqueId(), car: "Acura Integra", speed: 195 },
-    { id: _.uniqueId(), car: "VW Love Bus", speed: 45 }
+    { id: _.uniqueId(), car: "Ford Mustang", speed: 160, type : 'Car' },
+    { id: _.uniqueId(), car: "Chevy Camaro", speed: 220, type : 'Car' },
+    { id: _.uniqueId(), car: "Dodge Dart", speed: 140, type : 'Car' },
+    { id: _.uniqueId(), car: "Acura Integra", speed: 195, type : 'Car' },
+    { id: _.uniqueId(), car: "VW Love Bus", speed: 45, type : 'Car' }
 ];
 
 server.get('/cars', function(req, res){

@@ -12,8 +12,117 @@
     <div class="main-content">
 
 
+        <h2>Templates</h2>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Car</th>
+                    <th>Speed</th>
+                    <th>Type</th>
+                    <th class="span1">Remove</th>
+                </tr>
+            </thead>
+            <tbody data-bind="template: { name: displayTemplate, foreach: cars } "></tbody>
+        </table>
+
+        <script type="text/html" id="car-template">
+            <tr>
+                <td data-bind="text: $data.car"></td>
+                <td data-bind="text: $data.speed"></td>
+                <td>
+                    <img src="img/car-icon.jpg" />
+                </td>
+                <td><i data-bind="click: $root.removeCar" class="icon-remove-circle" style="cursor: pointer"></i></td>
+            </tr>
+        </script>
+
+        <script type="text/html" id="truck-template">
+            <tr>
+                <td data-bind="text: $data.car"></td>
+                <td data-bind="text: $data.speed"></td>
+                <td>
+                    <img src="img/truck-icon.jpg" />
+                </td>
+                <td><i data-bind="click: $root.removeCar" class="icon-remove-circle" style="cursor: pointer"></i></td>
+            </tr>
+        </script>
+
+        <div class="well">
+            <fieldset>
+                <legend>Add New Car</legend>
+
+                <label>Car</label>
+                <input data-bind="value: addCarName" type="text" />
+
+                <label>Speed</label>
+                <input data-bind="value: addCarSpeed" type="text" />
+
+                <label>Type</label>
+                <select data-bind="value: addCarType, options: carTypeChoices"></select>
+
+                <br />
+                <button data-bind="click: addNewCar" class="btn btn-primary">Add Car</button>
+
+            </fieldset>
+        </div>
+
 
     </div>
+
+
+    <script src="js/lib/jquery-2.1.1.min.js"></script>
+    <script src="js/lib/knockout-3.2.0.js"></script>
+    <script type="text/javascript">
+        var ViewModel = function () {
+            var self = this;
+
+            self.cars = ko.observableArray([]);
+            self.loadCars = function () {
+                $.get('http://localhost:5150/cars', function (data) {
+                    self.cars(data);
+                });
+            };
+            self.loadCars();
+
+
+            self.addCarName = ko.observable();
+            self.addCarSpeed = ko.observable();
+            self.addCarType = ko.observable();
+
+            self.carTypeChoices = ko.observableArray(["Car", "Truck"]);
+
+            self.displayTemplate = function (car) {
+                return car.type == "Car" ? "car-template" : "truck-template";
+            };
+
+            self.addNewCar = function () {
+
+                var payload = { car: self.addCarName(), speed: self.addCarSpeed(), type: self.addCarType() };
+
+                $.post('http://localhost:5150/cars',
+                    { payload: JSON.stringify(payload) },
+                    function () {
+                        self.loadCars();
+                    });
+            };
+
+            self.removeCar = function (car) {
+                $.ajax({
+                    url: 'http://localhost:5150/cars/' + car.id,
+                    type: 'DELETE',
+                    success: function () {
+                        self.loadCars();
+                    }
+                });
+            };
+
+        };
+
+        ko.applyBindings(new ViewModel());
+
+    </script>
+
+
 
 </body>
 </html>
