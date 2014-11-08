@@ -17,19 +17,17 @@
                     <legend>Data-Binding 101</legend>
 
                     <label>Type Something Here</label>
-                    <input id="myInput" data-bind="value : message" type="text" 
+                    <input id="myInput" type="text" 
                            placeholder="Come on you know you want to...." />
 
                     <div style="padding: 25px;">
-                        <button id="btnProcess" class="btn btn-primary"
-                                data-bind="click: buttonClicked">
+                        <button id="btnProcess" class="btn btn-primary">
                             Process Input
                         </button>
                     </div>
 
                     <label>Results</label>
-                    <div id="myResults" data-bind="html: message" 
-                         class="alert alert-info" style="width: 200px; height: 50px;">
+                    <div id="myResults" class="alert alert-info" style="width: 200px; height: 50px;">
                     </div>
 
                 </fieldset>
