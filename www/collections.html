@@ -24,7 +24,7 @@
                 <tr>
                     <td data-bind="text: $data.car"></td>
                     <td data-bind="text: $data.speed"></td>
-                    <td><i class="icon-remove-circle" style="cursor: pointer"></i></td>
+                    <td><i data-bind="click: $root.removeCar" class="icon-remove-circle" style="cursor: pointer"></i></td>
                 </tr>
             </tbody>
         </table>
@@ -70,6 +70,10 @@
                 car: self.addCarName(),
                 speed: self.addCarSpeed()
             });
+        };
+
+        self.removeCar = function (car) {
+            self.cars.remove(car);
         };
     };
 
