@@ -37,4 +37,4 @@ git checkout -f templates1
 
 git checkout -f mapping1
 
-git checkout -f mapping2
+git checkout -f customBindings1
