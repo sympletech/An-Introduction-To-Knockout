@@ -34,13 +34,13 @@
                 <legend>Add New Car</legend>
 
                 <label>Car</label>
-                <input type="text" />
+                <input data-bind="value: addCarName" type="text" />
 
                 <label>Speed</label>
-                <input type="text" />
+                <input data-bind="value: addCarSpeed" type="text" />
 
                 <br />
-                <button class="btn btn-primary">Add Car</button>
+                <button data-bind="click: addNewCar" class="btn btn-primary">Add Car</button>
 
             </fieldset>
         </div>
@@ -62,6 +62,15 @@
         var self = this;
 
         self.cars = ko.observableArray(myCollection);
+
+        self.addCarName = ko.observable();
+        self.addCarSpeed = ko.observable();
+        self.addNewCar = function () {
+            self.cars.push({
+                car: self.addCarName(),
+                speed: self.addCarSpeed()
+            });
+        };
     };
 
     ko.applyBindings(new ViewModel());
