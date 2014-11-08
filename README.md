@@ -21,6 +21,8 @@ git checkout -f Basics1
 
 git checkout -f Basics2
 
+git checkout -f Basics3
+
 git checkout -f Collections1
 
 git checkout -f Collections2

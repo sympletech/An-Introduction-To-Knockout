@@ -39,14 +39,22 @@
 
     </div>
     
-    <script src="js/lib/jquery-2.1.1.min.js"></script>
+
+    <script src="js/lib/knockout-3.2.0.js"></script>
     <script type="text/javascript">
-        $('#btnProcess').on('click', function (e) {
-            e.preventDefault();
-            $("#myResults").html(
-                $("#myInput").val()
-            );
-        });
+        var ViewModel = function () {
+            var self = {};
+
+            self.message = ko.observable();
+
+            self.buttonClicked = function () {
+                self.message(self.message() + " Modified");
+            };
+
+            return self;
+        };
+
+        ko.applyBindings(new ViewModel());
     </script>    
 
 </body>
